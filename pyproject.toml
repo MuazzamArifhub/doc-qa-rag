@@ -1,0 +1,30 @@
+[project]
+name = "doc-qa-rag"
+version = "0.1.0"
+description = "Document Q&A over course notes with retrieval-augmented generation (LangChain, FAISS, FastAPI)."
+readme = "README.md"
+# faiss-cpu doesn't publish Windows builds for Python 3.15 yet, so stay below it.
+requires-python = ">=3.11,<3.15"
+dependencies = [
+    "langchain-community",
+    "langchain-text-splitters",
+    "faiss-cpu",
+    "fastembed",
+    "fastapi",
+    "uvicorn",
+    "pypdf",
+]
+
+[project.optional-dependencies]
+# Only needed to generate written answers with Claude. Retrieval works without it.
+llm = ["anthropic"]
+
+[dependency-groups]
+dev = ["pytest>=8", "httpx"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
